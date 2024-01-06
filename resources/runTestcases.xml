@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name="Suite" parallel="false">
-  <test name="Test">
-    <classes>
-      <class name="com.guru99bank.login.TC01_CreateAccountAndLogin"/>
-    </classes>
-  </test> <!-- Test -->
+<suite name="Risefairsketch" parallel="false">
+	<test name="Run on Chrome">
+		<parameter name="browser" value="Chrome" />
+		<classes>
+			<class name="com.risefairsketch.TC01_LuyenTap02" />
+		</classes>
+	</test> <!-- Test -->
 </suite> <!-- Suite -->
