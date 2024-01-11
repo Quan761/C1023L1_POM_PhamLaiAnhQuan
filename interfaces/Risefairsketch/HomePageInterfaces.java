@@ -1,5 +1,6 @@
 package Risefairsketch;
 
-public class HomePageInterface {
-	public static final String TASKS = "//span[text()='Tasks']";
+public class HomePageInterfaces {
+	public static final String TXT_USERNAME = "//span[text()='John Doe']";
+	public static final String TXT_MENU = "//a[contains(@href,'%s')]";
 }

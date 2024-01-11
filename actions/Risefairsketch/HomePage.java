@@ -1,9 +1,11 @@
 package Risefairsketch;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 
 import commons.AbstractPage;
-import Risefairsketch.HomePageInterface;
+import Risefairsketch.HomePageInterfaces;
 
 public class HomePage extends AbstractPage {
 	WebDriver driver;
@@ -12,7 +14,11 @@ public class HomePage extends AbstractPage {
 		driver = driver_;
 	}
 
-	public void clickTasks() {
-		clickToElement(driver, HomePageInterface.TASKS);
+	public void verifyHomePageIsDisplayed() {
+		Assert.assertTrue(driver.findElement(By.xpath(HomePageInterfaces.TXT_USERNAME)).isDisplayed());
+	}
+
+	public void selectMenu(String menu) {
+		clickToElement(driver, String.format(HomePageInterfaces.TXT_MENU, menu));
 	}
 }

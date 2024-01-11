@@ -2,10 +2,10 @@ package Risefairsketch;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import commons.AbstractPage;
-import Risefairsketch.TasksPageInterface;
 
 public class TasksPage extends AbstractPage {
 	WebDriver driver;
@@ -15,149 +15,100 @@ public class TasksPage extends AbstractPage {
 	}
 
 	public void clickAddTask() {
-		clickToElement(driver, TasksPageInterface.AddTask);
+		clickToElement(driver, TasksPageInterfaces.BTN_ADDTASK);
 	}
 
-	public void enterTitle(String taskName) {
-		sendkeyToElement(driver, TasksPageInterface.TXB_TITLE, taskName);
+	public void selectValueInDropdownlist(String combobox, String value) {
+		clickToElement(driver, String.format(TasksPageInterfaces.DROPDOWNLISTS, combobox));
+		clickToElement(driver, String.format(TasksPageInterfaces.OPTIONS, value));
 	}
 
-	public void enterDescription() {
-		sendkeyToElement(driver, TasksPageInterface.TXB_DESCRIPTION, "ThucHanh02");
+	public void selectValueInCombobox(String combobox, String value) {
+		clickToElement(driver, String.format(TasksPageInterfaces.COMBOBOX, combobox));
+		clickToElement(driver, String.format(TasksPageInterfaces.OPTIONS, value));
 	}
 
-	public void clickRelatedTo() {
-		clickToElement(driver, TasksPageInterface.RELATEDTO);
+	public void inputAllInformation(String title) {
+
+		WebElement txbTitle = findAnElement(driver, TasksPageInterfaces.TXB_TITLE);
+		WebElement description = findAnElement(driver, TasksPageInterfaces.TXA_DESCRIPTION);
+		WebElement startdate = findAnElement(driver, TasksPageInterfaces.TXB_STARTDATE);
+		WebElement deadline = findAnElement(driver, TasksPageInterfaces.TXB_DEADLINE);
+		WebElement save = findAnElement(driver, TasksPageInterfaces.BTN_SAVE);
+
+		System.out.println("Input Title data");
+		txbTitle.sendKeys(title);
+
+		System.out.println("Input Description data");
+		description.sendKeys("Description");
+
+		System.out.println("Select Related to with value Project");
+		selectValueInDropdownlist("Related to", "Project");
+
+		System.out.println("Select Project with value Online Course Creation and Launch");
+		selectValueInDropdownlist("Project", "Online Course Creation and Launch");
+
+		System.out.println("Select Points with value 1 Point");
+		selectValueInDropdownlist("Points", "1 Point");
+
+		System.out.println("Select Milestone with value Release");
+		selectValueInDropdownlist("Milestone", "Release");
+
+		System.out.println("Select Assign to with value John Doe");
+		selectValueInDropdownlist("Assign to", "John Doe");
+
+		System.out.println("Select Collaborators with value John Doe");
+		selectValueInCombobox("Collaborators", "John Doe");
+
+		System.out.println("Select Status with value To do");
+		selectValueInDropdownlist("Status", "To do");
+
+		System.out.println("Select Priority with value Minor");
+		selectValueInDropdownlist("Priority", "Minor");
+
+		System.out.println("Select Labels with value Feedback");
+		selectValueInCombobox("Labels", "Feedback");
+
+		System.out.println("Enter Start date");
+		startdate.sendKeys("12-12-2020");
+
+		System.out.println("Enter Deadline");
+		deadline.sendKeys("12-12-2021");
+
+		System.out.println("Click Save");
+		save.click();
+	}
+	
+	public void verifyTaskIsAddedSuccessfully(){
+		waitForElementInvisible(driver, TasksPageInterfaces.PUP_MODAL);
+//		Assert.assertTrue(driver.findElements(By.xpath(TasksPageInterfaces.PUP_MODAL)).size() < 0);
+	}
+	
+	public void searchWithKeyword(String keyword){
+		sendkeyToElement(driver, TasksPageInterfaces.TXB_SEARCH, keyword);
+	}
+	
+	public void clickTaskView(){
+		clickToElement(driver, TasksPageInterfaces.LNK_VIEWTASK);
+	}
+	
+	public void verifyInfoTaskPopupDisplays(){
+		waitForElementVisible(driver, TasksPageInterfaces.PUP_INFOTASK);
+		Assert.assertTrue(driver.findElement(By.xpath(TasksPageInterfaces.PUP_INFOTASK)).isDisplayed());
+	}
+	
+	public void addComments(String comment){
+		sendkeyToElement(driver, TasksPageInterfaces.TXA_COMMENT, comment);
+		clickToElement(driver, TasksPageInterfaces.BTN_ADDCOMMENT);
+	}
+	
+	public void verifyCommentIsAddedSuccessfully(){
+		waitForElementVisible(driver, TasksPageInterfaces.MSG_POSTCOMMENTSUCCESSFULLY);
+		Assert.assertTrue(driver.findElement(By.xpath(TasksPageInterfaces.MSG_POSTCOMMENTSUCCESSFULLY)).isDisplayed());
+	}
+	
+	public void clickKanban(){
+		clickToElement(driver, TasksPageInterfaces.BTN_KANBAN);
 	}
 
-	public void chooseProject() {
-		clickToElement(driver, TasksPageInterface.CHOOSEPROJECT);
-	}
-
-	public void clickProject() {
-		clickToElement(driver, TasksPageInterface.PROJECT);
-	}
-
-	public void chooseOnlineCourseCreationLaunch() {
-		clickToElement(driver, TasksPageInterface.CHOOSEONLINECOURSECREATIONLAUNCH);
-	}
-
-	public void clickPoints() {
-		clickToElement(driver, TasksPageInterface.POINTS);
-	}
-
-	public void choose2Points() {
-		clickToElement(driver, TasksPageInterface.CHOOSE2POINTS);
-	}
-
-	public void clickMilestone() {
-		clickToElement(driver, TasksPageInterface.MILESTONE);
-	}
-
-	public void chooseBetaRelease() {
-		clickToElement(driver, TasksPageInterface.CHOOSEBETARELEASE);
-	}
-
-	public void clickAssignTo() {
-		clickToElement(driver, TasksPageInterface.ASSIGNTO);
-	}
-
-	public void chooseJohnDoe() {
-		clickToElement(driver, TasksPageInterface.CHOOSEJOHNDOE);
-	}
-
-	public void clickCollaborators() {
-		clickToElement(driver, TasksPageInterface.COLLABORATOR);
-	}
-
-	public void chooseMarkThomas() {
-		clickToElement(driver, TasksPageInterface.CHOOSEMARKTHOMAS);
-	}
-
-	public void clickStatus() {
-		clickToElement(driver, TasksPageInterface.STATUS);
-	}
-
-	public void chooseTodo() {
-		clickToElement(driver, TasksPageInterface.CHOOSETODO);
-	}
-
-	public void clickPriority() {
-		clickToElement(driver, TasksPageInterface.PRIORITY);
-	}
-
-	public void chooseMinor() {
-		clickToElement(driver, TasksPageInterface.CHOOSEMINOR);
-	}
-
-	public void clickLabels() {
-		clickToElement(driver, TasksPageInterface.LABELS);
-	}
-
-	public void chooseFeedBack() {
-		clickToElement(driver, TasksPageInterface.CHOOSEFEEDBACK);
-	}
-
-	public void clickStartDate() {
-		clickToElement(driver, TasksPageInterface.STARTDATE);
-	}
-
-	public void chooseStartDate() {
-		clickToElement(driver, TasksPageInterface.CHOOSE30);
-	}
-
-	public void clickDeadline() {
-		clickToElement(driver, TasksPageInterface.DEADLINE);
-	}
-
-	public void chooseDeadline() {
-		clickToElement(driver, TasksPageInterface.CHOOSE4);
-	}
-
-	public void clickSave() {
-		clickToElement(driver, TasksPageInterface.BTN_SAVE);
-	}
-
-	public void waitForPopupDisappear() {
-		waitForElementPresence(driver, TasksPageInterface.WAIT);
-	}
-
-	public void enterSearch(String taskName) {
-		sendkeyToElement(driver, TasksPageInterface.TXB_SEARCH, taskName);
-	}
-
-	public void clickTitle() {
-		clickElementByJavascript(driver, TasksPageInterface.LBL_TITLE);
-	}
-
-	public void enterFirstComment() {
-		sendkeyToElement(driver, TasksPageInterface.TXB_COMMENT, "First comment");
-	}
-
-	public void clickPostCommentFirstTime() {
-		clickToElement(driver, TasksPageInterface.BTN_POSTCOMMENT);
-	}
-
-	public void verifyCommentIsAdded() {
-		waitForElementVisible(driver, TasksPageInterface.ALERTMESSAGE);
-		Assert.assertTrue(driver.findElement(By.xpath(TasksPageInterface.ALERTMESSAGE)).isDisplayed());
-	}
-
-	public void enterSecondComment() {
-		sendkeyToElement(driver, TasksPageInterface.TXB_COMMENT, "Second comment");
-	}
-
-	public void clickPostCommentSecondTime() {
-		clickToElement(driver, TasksPageInterface.BTN_POSTCOMMENT);
-		waitForElementPresence(driver, TasksPageInterface.ALERTMESSAGE);
-	}
-
-	public void clickTodo() {
-		clickToElement(driver, TasksPageInterface.TODO);
-		clickToElement(driver, TasksPageInterface.CLICKTOCHANGETODO);
-	}
-
-	public void chooseInProgress() {
-		clickToElement(driver, TasksPageInterface.INPROGRESS);
-	}
 }

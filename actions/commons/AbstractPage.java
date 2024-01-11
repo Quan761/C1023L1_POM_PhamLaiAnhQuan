@@ -64,6 +64,11 @@ public class AbstractPage {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOfAllElements(element));
 	}
+	
+	public void clearText(WebDriver driver, String locator){
+		WebElement element = findAnElement(driver, locator);
+		element.clear();
+	}
 
 	public void waitForElementInvisible(WebDriver driver, String locator) {
 		By xpath = By.xpath(locator);
@@ -85,7 +90,7 @@ public class AbstractPage {
 
 	public void clickToElement(WebDriver driver, String locator) {
 		WebElement element = findAnElement(driver, locator);
-		waitForElementClickable(driver, locator);
+		waitForElementVisible(driver, locator);
 		element.click();
 	}
 
@@ -170,17 +175,5 @@ public class AbstractPage {
 				break;
 			}
 		}
-	}
-
-	public void clickElementByJavascript(WebDriver driver, String locator) {
-		WebElement element = findAnElement(driver, locator);
-		waitForElementsVisible(driver, locator);
-		JavascriptExecutor executor = (JavascriptExecutor) driver;
-		executor.executeScript("arguments[0].click();", element);
-	}
-
-	public void clear(WebDriver driver, String locator) {
-		WebElement element = findAnElement(driver, locator);
-		element.clear();
 	}
 }
